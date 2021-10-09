@@ -3,10 +3,13 @@ import styled from "styled-components";
 import LeftSide from "./LeftSide";
 import Main from "./Main";
 import RightSide from "./RightSide";
+import { Redirect } from "react-router";
+import { connect } from "react-redux";
 
 const Home = (props) => {
     return (
         <Container>
+            {!props.user && <Redirect to="/"/>}
             <Section>
                 <h5><a>Hiring in a hurry -</a></h5>
                 <p>Find talented pros in record time with upwork and keep the business moving</p>
@@ -28,11 +31,11 @@ const Container = styled.div`
     margin-right: 16px;
 `;
 
-const Content = styled.div`
-    max-width: 1128px;
-    margin-left: auto;
-    margin-right: auto;
-`;
+// const Content = styled.div`
+//     max-width: 1128px;
+//     margin-left: auto;
+//     margin-right: auto;
+// `;
 
 const Section = styled.section`
     min-height: 50px;
@@ -79,4 +82,10 @@ const Layout = styled.div`
     }
 `;
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        user: state.userState.user
+    };
+};
+
+export default connect(mapStateToProps)(Home);
